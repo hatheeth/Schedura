@@ -4,6 +4,12 @@ import auth from "./src/routes/authRoute.js"
 
 const app = express();
 
+
+app.use(express.json());
+
+// Parse URL‑encoded form data (optional)
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors({
   origin: ["http://localhost:3000", ""],
   methods: ["GET", "POST", "PUT", "DELETE"],
