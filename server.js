@@ -1,13 +1,11 @@
 import express from "express";
 import cors from "cors";
-import auth from "./src/routes/authRoute.js"
+import auth from "./src/routes/authRoute.js";
+import user from "./src/routes/userRoute.js";
 
 const app = express();
 
-
 app.use(express.json());
-
-// Parse URL‑encoded form data (optional)
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
@@ -17,7 +15,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
+
 app.use('/auth', auth);
+app.use('/user', user);
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
