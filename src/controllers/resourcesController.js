@@ -2,7 +2,27 @@ import { supabase } from "../db/supabaseClient.js";
 
 export const getResources = async (req, res) => {
     try {
-        const { data, error } = await supabase.from("resources").select("*");
+
+        const token = req.headers.authorization?.replace("Bearer ", "");
+        const refreshToken = req.headers["x-refresh-token"];
+
+        if (!token || !refreshToken) {
+            return res.status(401).json({ success: false, error: "Missing tokens" });
+        }
+
+        
+        const { data: session, error: authError } = await supabase.auth.setSession({
+            access_token: token,
+            refresh_token: refreshToken,
+        });
+
+        if (authError || !session?.user?.id) {
+            return res.status(401).json({ success: false, error: "Invalid Session" });
+        }
+
+        const user = session?.user?.id;
+
+        const { data, error } = await supabase.from("resources").select("*").eq("createdBy", user);;
         if (error) throw error;
         res.status(200).json(data);
     } catch (err) {
@@ -50,11 +70,11 @@ export const createResource = async (req, res) => {
         }
 
         const { name, type, location, description } = req.body;
-
+        const createdBy = session?.user?.id;
 
         const { data, error } = await supabase
             .from("resources")
-            .insert([{ name, type, location, description }])
+            .insert([{ name, type, location, description, createdBy }])
             .select();
         if (error) throw error;
         res.status(201).json(data[0]);
