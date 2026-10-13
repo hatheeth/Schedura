@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
 
   res.cookie("sb-access-token", data.session.access_token, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", 
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7
   });
