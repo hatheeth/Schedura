@@ -5,7 +5,7 @@ import {
   createResource,
   updateResource,
   deleteResource
-} from "../controllers/resourceController.js";
+} from "../controllers/resourcesController.js";
 
 const router = express.Router();
 
