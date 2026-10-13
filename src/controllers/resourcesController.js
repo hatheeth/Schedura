@@ -136,8 +136,9 @@ export const deleteResource = async (req, res) => {
             return res.status(401).json({ success: false, error: "Invalid Session" });
         }
 
-        const { id } = req.params;
-        const { error } = await supabase.from("resources").delete().eq("id", id);
+        
+        const numericId = parseInt(req.params.id, 10);
+        const { error } = await supabase.from("resources").delete().eq("id", numericId);
         if (error) throw error;
         res.status(204).send();
     } catch (err) {
