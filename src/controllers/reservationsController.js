@@ -84,8 +84,8 @@ export const getUserReservations = async (req, res) => {
       id: r.id,
       userId: r.userId,              // not user_id
       resourceId: r.resourceId,      // not resource_id
-      startsAt: r.startsAt.toISOString(),
-      endsAt: r.endsAt.toISOString(),
+      startsAt: r.startsAt,
+      endsAt: r.endsAt,
       status: r.status,
     }));
     
