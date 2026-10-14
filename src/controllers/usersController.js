@@ -22,7 +22,7 @@ export const userInfo = async (req, res) => {
 
     const { data, error } = await supabase
       .from("users")
-      .select("name, email")
+      .select("name, email, role")
       .eq("id", session.user.id);
 
     if (error) {
