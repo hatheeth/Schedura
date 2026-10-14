@@ -22,8 +22,8 @@ export const createReservation = async (req, res) => {
             .select("*")
             .eq("resourceId", resourceId)
             .eq("status", "confirmed")
-            .filter("startsAt", "<", endsAt)
-            .filter("endsAt", ">", startsAt);
+            .or(`and(startsAt.lte.${endsAt},endsAt.gte.${startsAt})`);
+
 
 
         if (existing && existing.length > 0) {
