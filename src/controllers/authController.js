@@ -33,12 +33,6 @@ export const signup = async (req, res) => {
 
   if (insertError) return res.status(400).json({ error: insertError.message });
 
-  res.cookie("sb-access-token", data.session.access_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7
-  });
 
   res.json({
     session: data.session,
