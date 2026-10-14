@@ -4,6 +4,6 @@ const router = express.Router();
 
 
 router.post("/create", createReservation );
-router.get("fetch", getUserReservations);
+router.get("/fetch", getUserReservations);
 
 export default router;
