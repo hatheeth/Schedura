@@ -80,8 +80,16 @@ export const getUserReservations = async (req, res) => {
 
     if (error) throw error;
 
+    const normalized = reservations.map(r => ({
+      id: r.id,
+      userId: r.userId,              // not user_id
+      resourceId: r.resourceId,      // not resource_id
+      startsAt: r.startsAt.toISOString(),
+      endsAt: r.endsAt.toISOString(),
+      status: r.status,
+    }));
     
-    res.status(200).json(reservations);
+    res.status(200).json(normalized);
   } catch (err) {
     console.error("Fetch reservations failed:", err.message);
     res.status(500).json({ error: err.message });
