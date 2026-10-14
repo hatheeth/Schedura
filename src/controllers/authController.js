@@ -12,7 +12,11 @@ export const signup = async (req, res) => {
     }
   });
 
-  if (error) return res.status(400).json({ error: error.message });
+  if (error) {
+    console.error("Signup error:", error.message);
+    return res.status(400).json({ error: error.message });
+  }
+
 
   const user = data.user;
 
@@ -31,11 +35,11 @@ export const signup = async (req, res) => {
 
   res.cookie("sb-access-token", data.session.access_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", 
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7
   });
-  
+
   res.json({
     session: data.session,
     message: "sign Up is succesful",
