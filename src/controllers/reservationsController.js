@@ -47,7 +47,7 @@ export const createReservation = async (req, res) => {
             .select();
 
         if (error) throw error;
-        res.status(201).json(data[0]);
+        res.status(201).json(data);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
