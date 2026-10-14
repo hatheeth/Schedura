@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getResources,
+  getResourcesUser,
   getResourceById,
   createResource,
   updateResource,
@@ -10,6 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/", getResources);
+router.get("/user", getResourcesUser);
 router.get("/:id", getResourceById);
 router.post("/", createResource);
 router.patch("/:id", updateResource);

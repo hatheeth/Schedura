@@ -31,6 +31,40 @@ export const getResources = async (req, res) => {
 };
 
 
+export const getResourcesUser = async (req, res) => {
+    try {
+
+        const token = req.headers.authorization?.replace("Bearer ", "");
+        const refreshToken = req.headers["x-refresh-token"];
+
+        if (!token || !refreshToken) {
+            return res.status(401).json({ success: false, error: "Missing tokens" });
+        }
+
+        
+        const { data: session, error: authError } = await supabase.auth.setSession({
+            access_token: token,
+            refresh_token: refreshToken,
+        });
+
+        if (authError || !session?.user?.id) {
+            return res.status(401).json({ success: false, error: "Invalid Session" });
+        }
+
+        const user = session?.user?.id;
+
+        const { data, error } = await supabase.from("resources").select("*").eq;
+        
+        if (error) throw error;
+        res.status(200).json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+
+
+
 export const getResourceById = async (req, res) => {
     try {
         const { id } = req.params;
