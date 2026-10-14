@@ -53,7 +53,9 @@ export default function RegisterPage() {
 
       localStorage.setItem("supabaseSession", JSON.stringify(data.session));
 
+      if (!data.session?.access_token || data.session?.user?.role !== "admin") {
       router.push("/home");
+    }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
