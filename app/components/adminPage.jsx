@@ -188,13 +188,13 @@ export default function AdminResourcesPage() {
     const [resources, setResources] = useState([]);
     const [profile, setProfile] = useState(SAMPLE_USER);
     const user = profile;
-    const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+    const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
     const handleLogout = useHandleLogout();
     useEffect(() => {
         const fetchResources = async () => {
-            const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
-            const accessToken = session?.access_token;
-            const refreshToken = session?.refresh_token;
+            const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+            const accessToken = stored.session?.access_token;
+            const refreshToken = stored.session?.refresh_token;
 
 
 
@@ -231,9 +231,9 @@ export default function AdminResourcesPage() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
-            const accessToken = session?.access_token;
-            const refreshToken = session?.refresh_token;
+            const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+            const accessToken = stored.session?.access_token;
+            const refreshToken = stored.session?.refresh_token;
 
 
 
@@ -284,7 +284,7 @@ export default function AdminResourcesPage() {
 
     // UI ownership filter. Your backend should also enforce ownership.
     const myResources = resources.filter(
-        (resource) => resource.createdBy === session?.user?.id,
+        (resource) => resource.createdBy === stored.session?.user?.id,
     );
 
     const resourceTypes = [
@@ -411,9 +411,9 @@ export default function AdminResourcesPage() {
 
         try {
 
-            const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
-            const accessToken = session?.access_token;
-            const refreshToken = session?.refresh_token;
+           const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+            const accessToken = stored.session?.access_token;
+            const refreshToken = stored.session?.refresh_token;
 
             const res = await fetch(endpoint, {
                 method,
@@ -456,9 +456,9 @@ export default function AdminResourcesPage() {
         }
         try {
             const resourceId = selectedResource.id;
-            const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
-            const accessToken = session?.access_token;
-            const refreshToken = session?.refresh_token;
+            const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+            const accessToken = stored.session?.access_token;
+            const refreshToken = stored.session?.refresh_token;
 
 
             const res = await fetch(`https://schedura-su4v.onrender.com/resource/${selectedResource.id}`, {

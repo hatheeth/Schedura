@@ -126,6 +126,10 @@ export default function RegisterPage() {
           Don't Have an Account ?{" "}
           <Link href="/signup" className="font-medium text-violet-600 hover:text-violet-700">Sign Up</Link>
         </p>
+        <p className="mt-1 text-center text-sm text-slate-500">
+          
+          <Link href="/adminLogin" className="font-medium text-violet-600 hover:text-violet-700">Log In as Admin</Link>
+        </p>
       </div>
     </main>
   );

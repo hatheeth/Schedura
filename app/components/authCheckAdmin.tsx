@@ -8,13 +8,10 @@ export default function AuthCheck({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    const session = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
-
-    if (!session?.access_token || session?.user?.role !== "admin") {
+    const stored = JSON.parse(localStorage.getItem("supabaseSession") || "{}");
+    if (!stored.session?.access_token || stored.user?.role !== "admin") {
       router.push("/");
-    }
-    else {
-
+    } else {
       setLoading(false);
     }
   }, [router]);
