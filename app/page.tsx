@@ -56,6 +56,9 @@ export default function RegisterPage() {
       if (!data.session?.access_token || data.session?.user?.role !== "admin") {
       router.push("/home");
     }
+    else{
+       router.push("/admin");
+    }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
