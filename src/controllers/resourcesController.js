@@ -53,8 +53,8 @@ export const getResourcesUser = async (req, res) => {
 
         const user = session?.user?.id;
 
-        const { data, error } = await supabase.from("resources").select("*").eq;
-        
+        const { data, error } = await supabase.from("resources").select("*");
+
         if (error) throw error;
         res.status(200).json(data);
     } catch (err) {
