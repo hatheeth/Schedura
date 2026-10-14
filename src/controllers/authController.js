@@ -45,11 +45,62 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Authenticate user
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return res.status(400).json({ error: error.message });
 
-  res.json({ session: data.session });
+  const userId = data.user.id;
+
+  // Fetch role from your 'users' table
+  const { data: userData, error: userError } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", userId)
+    .single();
+
+  if (userError) return res.status(400).json({ error: userError.message });
+
+  // Return both session and role
+  res.json({
+    session: data.session,
+    user: {
+      id: userId,
+      email,
+      role: userData.role,
+    },
+  });
 };
+
+
+export const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Authenticate user
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) return res.status(400).json({ error: error.message });
+
+  const userId = data.user.id;
+
+  // Fetch role from your 'users' table
+  const { data: userData, error: userError } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", userId)
+    .single();
+
+  if (userError) return res.status(400).json({ error: userError.message });
+
+  // Return both session and role
+  res.json({
+    session: data.session,
+    user: {
+      id: userId,
+      email,
+      role: userData.role,
+    },
+  });
+};
+
 
 export const logout = async (req, res) => {
   try {
